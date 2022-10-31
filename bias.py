@@ -8,7 +8,7 @@ print(words)
 url = "https://www.vanityfair.com/news/2022/10/marjorie-taylor-greene-abortion-call-in"
 page = requests.get(url)
 
-print(page.text)
+# print(page.text)
 
 def bias_detection():
     bias_count = 0
