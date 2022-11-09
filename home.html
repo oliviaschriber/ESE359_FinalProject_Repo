@@ -2,12 +2,79 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Embedding JavaScript</title>
+    <title>Bias Tool Website</title>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+
+    <py-config>
+        [[fetch]]
+        files = ["\bias.py"]
+    </py-config>
+
 </head>
 <body>
-    <script>
-    var greet = "Hello World!";
-    document.write(greet); // Prints: Hello World!
-    </script>
+    <h1> Welcome to the Ultimate Gender Bias Detection Tool! </h1>
+    <br>
+    <h2> Instructions: Copy and paste text or insert a website url and then press the button! </h2>
+    <br>
+    <h3> Our bias detection tool will search for masculine and feminine encoded words, display each list and highlight their locations in the text. </h3>
+    <br>
+    <h4> We hope you find this tool useful! </h4>
+
+<body> 
+    <py-script> print('Hello, World!') </py-script> 
+        
+
+    <!-- import requests
+    from bs4 import BeautifulSoup
+    import colorama
+    from colorama import Fore
+
+
+    male_terms_job = ["active", "adventurous", "aggressive", "ambitious", "analytic", "assertive", "athletic", "autonomous", "battle", "boastful", "challenge", "champion", "competitive", "confident", "courageous", "decide", "decision", "decisive", "defend", "determined", "dominating", "dominant", "driven", "fearless", "fight", "forceful", "greedy", "head-strong", "headstrong", "hierarchical", "hostile", "impulsive", "independent", "individual", "intellectual", "lead", "logical", "objective", "opinionated", "outspoken", "persistent", "principle", "reckless", "self-confident", "self-reliant", "self-sufficient", "stubborn", "superior", "unreasonable"]
+    female_terms_job = ["agreeable", "affectionate", "child", "cheering", "collaborative", "communal", "compassionate", "connecting", "considerate", "cooperative", "co-operative", "dependable", "emotional", "empathetic", "feeling", "flatterable", "gentle", "honest", "interdependent", "interpersonal", "kind", "kinship", "loyal", "modest", "nagging", "nurturing", "pleasant", "polite", "quiet", "responsive", "sensitive", "submissive", "supportive", "sympathetic", "tender", "trusting", "understanding", "warm", "whiney", "enthusiastic", "inclusive", "yielding", "share", "sharing"]
+
+    def listToString(list):
+	    string = ""
+	    for each in list:
+		    string += each
+	r   eturn string
+
+    def bias_detection(terms):
+
+	    url = "https://www.vanityfair.com/news/2022/10/marjorie-taylor-greene-abortion-call-in" # Scraped from Web
+	    page = requests.get(url)
+
+	    soup = BeautifulSoup(page.text,'html.parser')
+	    soup_text = soup.get_text()
+
+	    soup_arr = soup_text.split()
+
+	    count = 0
+	    term_indices = []
+	    for word in soup_arr:
+		    if word in terms:
+			    term_indices.append(count) # index of word in list
+
+		    count = count + 1
+	
+
+	    count2 = 0
+	    for word in soup_arr:
+		    if count2 in term_indices:
+			    print(Fore.RED + str(word) + Fore.GREEN, end=' ')
+		    else: 
+			    print(Fore.GREEN + str(word), end=' ')
+		    count2 = count2 + 1
+
+	    print('\ncounts by bias terms:')
+	    for each in terms:
+		    print(str(each) + ': ' + str(soup_arr.count(each)))
+
+    print('Male_terms in job ads: ')
+    bias_detection(male_terms_job)
+    print('\nFemale_terms in job ads: ')
+    bias_detection(female_terms_job) -->
+
 </body>
 </html>
