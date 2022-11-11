@@ -21,6 +21,7 @@ def bias_detection(terms):
 	soup_text = soup.get_text()
 
 	soup_arr = soup_text.split()
+	print(soup_arr)
 
 	count = 0
 	term_indices = []

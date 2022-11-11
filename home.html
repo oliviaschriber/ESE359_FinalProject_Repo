@@ -5,25 +5,91 @@
     <title>Bias Tool Website</title>
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-
-    <py-config>
-        [[fetch]]
-        files = ["\bias.py"]
-    </py-config>
 </head>
+
+<py-env>
+ - asyncio
+ - requests
+ - colorama
+</py-env>
 <body>
     <h1> Welcome to the Ultimate Gender Bias Detection Tool! </h1>
-    <br>
+    <!--<br>-->
     <h2> Instructions: Copy and paste text or insert a website url and then press the button! </h2>
+    <h3> Our bias detection tool will: </h3>
+    <p> - search for masculine and feminine encoded words </p>
+    <p> - display each list </p>
+    <p> - highlight their locations in the text </p>
+    <!--<br>-->
+    <h3> We hope you find this tool useful! </h3>
+    
+    <p>Enter text here: <input type="text" id="input_text"> </p>
+    <button type="button" onclick="enterText()">Submit for de-biasing</button>
     <br>
-    <h3> Our bias detection tool will search for masculine and feminine encoded words, display each list and highlight their locations in the text.</h3>
+    <button type="button" onclick="window.location.reload();">RELOAD</button>
     <br>
-    <h4> We hope you find this tool useful! </h4>
 
-    <py-script> print('Hello, World!') </py-script> 
-    <py-script src='../bias.py'></py-script>
+    <p id="final_text_loc">TEXT APPEARS HERE</p>
 
-    <button type="button" onclick="alert('python bias.py')">DE-BIAS</button>
+    <!--<py-script> print('Hello, World!') </py-script> 
+    <py-script src="./bias.py"></py-script>-->
+
+    <py-script>
+import asyncio
+import requests
+# from bs4 import BeautifulSoup
+import colorama
+from colorama import Fore
+# from js import name
+
+# print(name)
+
+male_terms_job = ["active", "adventurous", "aggressive", "ambitious", "analytic", "assertive", "athletic", "autonomous", "battle", "boastful", "challenge", "champion", "competitive", "confident", "courageous", "decide", "decision", "decisive", "defend", "determined", "dominating", "dominant", "driven", "fearless", "fight", "forceful", "greedy", "head-strong", "headstrong", "hierarchical", "hostile", "impulsive", "independent", "individual", "intellectual", "lead", "logical", "objective", "opinionated", "outspoken", "persistent", "principle", "reckless", "self-confident", "self-reliant", "self-sufficient", "stubborn", "superior", "unreasonable"]
+
+female_terms_job = ["agreeable", "affectionate", "child", "cheering", "collaborative", "communal", "compassionate", "connecting", "considerate", "cooperative", "co-operative", "dependable", "emotional", "empathetic", "feeling", "flatterable", "gentle", "honest", "interdependent", "interpersonal", "kind", "kinship", "loyal", "modest", "nagging", "nurturing", "pleasant", "polite", "quiet", "responsive", "sensitive", "submissive", "supportive", "sympathetic", "tender", "trusting", "understanding", "warm", "whiney", "enthusiastic", "inclusive", "yielding", "share", "sharing"]
+
+def listToString(list):
+	string = ""
+	for each in list:
+		string += each
+	return string
+
+def bias_detection(terms):
+	# url = "https://www.vanityfair.com/news/2022/10/marjorie-taylor-greene-abortion-call-in"
+	# page = requests.get(url)
+	# soup = BeautifulSoup(page.text,'html.parser')
+	# soup_text = soup.get_text()
+	# soup_arr = soup_text.split()
+	soup_arr = ['Hi', 'this', 'is', 'a', 'bias', 'test', 'sentence', 'without', 'using', 'analytic', 'Beautiful', 'Soup', 'so', 'that', 'we', 'can', 'be', 'agreeable']
+	count = 0
+	term_indices = []
+	for word in soup_arr:
+		if word in terms:
+			term_indices.append(count)
+		count = count + 1
+	count2 = 0
+	for word in soup_arr:
+		# if count2 in term_indices:
+			# print(str(word))
+		# else:
+			#print(str(word))
+		count2 = count2 + 1
+	# print('\ncounts by bias terms:\n')
+	for each in terms:
+		print(str(each) + ': ' + str(soup_arr.count(each)))
+
+print('\nCOUNT OF PRESENT MALE TERMS [job ad bias]: \n')
+bias_detection(male_terms_job)
+print('\nCOUNT OF PRESENT FEMALE TERMS [job ad bias]: \n')
+bias_detection(female_terms_job)
+    </py-script>
+
+    <script>
+    	function enterText() {
+		text = document.getElementById("input_text").value
+		document.getElementById("final_text_loc").innerHTML = text
+	}
+    </script>
 
 </body>
 </html>
