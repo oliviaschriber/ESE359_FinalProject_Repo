@@ -12,7 +12,7 @@
  - requests
  - colorama
 </py-env>
-<body>
+<body onload="setup()">
     <h1> Welcome to the Ultimate Gender Bias Detection Tool! </h1>
     <!--<br>-->
     <h2> Instructions: Copy and paste text or insert a website url and then press the button! </h2>
@@ -23,26 +23,35 @@
     <!--<br>-->
     <h3> We hope you find this tool useful! </h3>
     
-    <p>Enter text here: <input type="text" id="input_text"> </p>
-    <button type="button" onclick="enterText()">Submit for de-biasing</button>
+    <p>Enter text or url here: <input type="text" id="input_field"> </p>
+    <button type="button" onclick="enter_text()">submit text to bias detector</button>
+    <br>
+    <button type="button" onclick="enter_url()">submit url to bias detector</button>
     <br>
     <button type="button" onclick="window.location.reload();">RELOAD</button>
     <br>
+    <p id="clicked_true">0</p>
+    <p id="clicked_false">1</p>
 
-    <p id="final_text_loc">TEXT APPEARS HERE</p>
-
-    <!--<py-script> print('Hello, World!') </py-script> 
-    <py-script src="./bias.py"></py-script>-->
+    <p id="final_output_location"></p>
 
     <py-script>
 import asyncio
-import requests
+# import requests
 # from bs4 import BeautifulSoup
-import colorama
-from colorama import Fore
-# from js import name
+from js import clicked
+import js
 
-# print(name)
+if(clicked):
+	from js import click_text
+	from js import click_url
+	if(click_text):
+		from js import entered_text
+	if(click_url):
+		from js import entered_url
+		url = entered_url
+		page = requests.get(url)
+		word_array = page.text.get_text().split()
 
 male_terms_job = ["active", "adventurous", "aggressive", "ambitious", "analytic", "assertive", "athletic", "autonomous", "battle", "boastful", "challenge", "champion", "competitive", "confident", "courageous", "decide", "decision", "decisive", "defend", "determined", "dominating", "dominant", "driven", "fearless", "fight", "forceful", "greedy", "head-strong", "headstrong", "hierarchical", "hostile", "impulsive", "independent", "individual", "intellectual", "lead", "logical", "objective", "opinionated", "outspoken", "persistent", "principle", "reckless", "self-confident", "self-reliant", "self-sufficient", "stubborn", "superior", "unreasonable"]
 
@@ -74,21 +83,37 @@ def bias_detection(terms):
 		# else:
 			#print(str(word))
 		count2 = count2 + 1
-	# print('\ncounts by bias terms:\n')
+	
+	# count of each term
 	for each in terms:
 		print(str(each) + ': ' + str(soup_arr.count(each)))
 
-print('\nCOUNT OF PRESENT MALE TERMS [job ad bias]: \n')
-bias_detection(male_terms_job)
-print('\nCOUNT OF PRESENT FEMALE TERMS [job ad bias]: \n')
-bias_detection(female_terms_job)
+# print('\nCOUNT OF PRESENT MALE TERMS [job ad bias]: \n')
+# bias_detection(male_terms_job)
+# print('\nCOUNT OF PRESENT FEMALE TERMS [job ad bias]: \n')
+# bias_detection(female_terms_job)
     </py-script>
 
-    <script>
-    	function enterText() {
-		text = document.getElementById("input_text").value
-		document.getElementById("final_text_loc").innerHTML = text
-	}
+    <script type="text/javascript">
+
+    clicked = document.getElementById("clicked_false").value
+
+    function enter_text() {
+	entered_text = document.getElementById("input_field").value
+	clicked = document.getElementById("clicked_true").value
+	click_text = 1
+	click_url = 0
+	window.location.reload();
+    }
+
+    function enter_url() {
+	entered_url = document.getElementById("input_field").value
+	clicked = document.getElementById("clicked_true").value
+	click_url = 1
+	click_text = 0
+	window.location.reload();
+    }
+    
     </script>
 
 </body>
