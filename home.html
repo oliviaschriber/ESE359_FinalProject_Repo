@@ -7,10 +7,6 @@
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
 </head>
 
-<py-env>
- - asyncio
- - requests
-</py-env>
 <body>
     <h1> Welcome to the Ultimate Gender Bias Detection Tool! </h1>
     <!--<br>-->
@@ -40,7 +36,7 @@
 	// run in http://0.0.0.0:8000/Desktop/ESE359_FinalProject_Repo/home.html
 	input_text = document.getElementById("input_field").value;
 	const python_s = document.getElementById("script");
-	python_s.src="./bias_text.py";
+	python_s.src="./bias.py";
 	console.log("here");
     }
 
