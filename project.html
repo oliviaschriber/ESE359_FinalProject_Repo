@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bias Tool Website</title>
+    <link rel="stylesheet" href="design.css" />
+    <script src="webscrape.js"></script>
+</head>
+
+<body>
+    <h1> Welcome to the Ultimate Gender Bias Detection Tool! </h1>
+    <!--<br>-->
+    <h2> Instructions: Copy and paste text or insert a website url and then press the button! </h2>
+    <h3> Our bias detection tool will: </h3>
+    <p> - search for masculine and feminine encoded words </p>
+    <p> - display each list </p>
+    <p> - highlight their locations in the text </p>
+    <!--<br>-->
+    <h3> We hope you find this tool useful! </h3>
+
+    <p>Enter text or url here: <input type="text" id="input_field"> </p>
+    <p>*if url: it should start with http: or https:</p>
+    <button type="button" onclick="submittext()">submit to bias detector</button>
+    <br>
+    <h3>TEXT</h3>
+    <p id="final_output"></p>
+    <br>
+    <h3>TERM COUNTS</h3>
+    <p id="count_output"></p>
+</body>

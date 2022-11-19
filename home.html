@@ -10,9 +10,8 @@
 <py-env>
  - asyncio
  - requests
- - colorama
 </py-env>
-<body onload="setup()">
+<body>
     <h1> Welcome to the Ultimate Gender Bias Detection Tool! </h1>
     <!--<br>-->
     <h2> Instructions: Copy and paste text or insert a website url and then press the button! </h2>
@@ -24,96 +23,27 @@
     <h3> We hope you find this tool useful! </h3>
     
     <p>Enter text or url here: <input type="text" id="input_field"> </p>
-    <button type="button" onclick="enter_text()">submit text to bias detector</button>
-    <br>
-    <button type="button" onclick="enter_url()">submit url to bias detector</button>
+    <p>*if url: it should start with http: or https:</p>
+    <button type="button" onclick="enter_text()">submit to bias detector</button>
     <br>
     <button type="button" onclick="window.location.reload();">RELOAD</button>
     <br>
-    <p id="clicked_true">0</p>
-    <p id="clicked_false">1</p>
-
     <p id="final_output_location"></p>
 
-    <py-script>
-import asyncio
-# import requests
-# from bs4 import BeautifulSoup
-from js import clicked
-import js
+    <py-script id="script" src=""></py-script>
+    <py-repl></py-repl>
 
-if(clicked):
-	from js import click_text
-	from js import click_url
-	if(click_text):
-		from js import entered_text
-	if(click_url):
-		from js import entered_url
-		url = entered_url
-		page = requests.get(url)
-		word_array = page.text.get_text().split()
-
-male_terms_job = ["active", "adventurous", "aggressive", "ambitious", "analytic", "assertive", "athletic", "autonomous", "battle", "boastful", "challenge", "champion", "competitive", "confident", "courageous", "decide", "decision", "decisive", "defend", "determined", "dominating", "dominant", "driven", "fearless", "fight", "forceful", "greedy", "head-strong", "headstrong", "hierarchical", "hostile", "impulsive", "independent", "individual", "intellectual", "lead", "logical", "objective", "opinionated", "outspoken", "persistent", "principle", "reckless", "self-confident", "self-reliant", "self-sufficient", "stubborn", "superior", "unreasonable"]
-
-female_terms_job = ["agreeable", "affectionate", "child", "cheering", "collaborative", "communal", "compassionate", "connecting", "considerate", "cooperative", "co-operative", "dependable", "emotional", "empathetic", "feeling", "flatterable", "gentle", "honest", "interdependent", "interpersonal", "kind", "kinship", "loyal", "modest", "nagging", "nurturing", "pleasant", "polite", "quiet", "responsive", "sensitive", "submissive", "supportive", "sympathetic", "tender", "trusting", "understanding", "warm", "whiney", "enthusiastic", "inclusive", "yielding", "share", "sharing"]
-
-def listToString(list):
-	string = ""
-	for each in list:
-		string += each
-	return string
-
-def bias_detection(terms):
-	# url = "https://www.vanityfair.com/news/2022/10/marjorie-taylor-greene-abortion-call-in"
-	# page = requests.get(url)
-	# soup = BeautifulSoup(page.text,'html.parser')
-	# soup_text = soup.get_text()
-	# soup_arr = soup_text.split()
-	soup_arr = ['Hi', 'this', 'is', 'a', 'bias', 'test', 'sentence', 'without', 'using', 'analytic', 'Beautiful', 'Soup', 'so', 'that', 'we', 'can', 'be', 'agreeable']
-	count = 0
-	term_indices = []
-	for word in soup_arr:
-		if word in terms:
-			term_indices.append(count)
-		count = count + 1
-	count2 = 0
-	for word in soup_arr:
-		# if count2 in term_indices:
-			# print(str(word))
-		# else:
-			#print(str(word))
-		count2 = count2 + 1
-	
-	# count of each term
-	for each in terms:
-		print(str(each) + ': ' + str(soup_arr.count(each)))
-
-# print('\nCOUNT OF PRESENT MALE TERMS [job ad bias]: \n')
-# bias_detection(male_terms_job)
-# print('\nCOUNT OF PRESENT FEMALE TERMS [job ad bias]: \n')
-# bias_detection(female_terms_job)
-    </py-script>
-
-    <script type="text/javascript">
-
-    clicked = document.getElementById("clicked_false").value
+    <script>
 
     function enter_text() {
-	entered_text = document.getElementById("input_field").value
-	clicked = document.getElementById("clicked_true").value
-	click_text = 1
-	click_url = 0
-	window.location.reload();
+	// run in terminal separate window: python -m http.server
+	// run in http://0.0.0.0:8000/Desktop/ESE359_FinalProject_Repo/home.html
+	input_text = document.getElementById("input_field").value;
+	const python_s = document.getElementById("script");
+	python_s.src="./bias_text.py";
+	console.log("here");
     }
 
-    function enter_url() {
-	entered_url = document.getElementById("input_field").value
-	clicked = document.getElementById("clicked_true").value
-	click_url = 1
-	click_text = 0
-	window.location.reload();
-    }
-    
     </script>
 
 </body>
