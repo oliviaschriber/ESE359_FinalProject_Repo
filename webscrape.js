@@ -9,8 +9,8 @@ function submittext(){
     inputtext = document.getElementById("input_field").value;
 
     if(inputtext.substring(0,4) == 'http'){
-        URLText = getURLText(inputtext);
-        console.log(URLText);
+        urltext = getURLText(inputtext);
+        inputtext = "<b id=nourl>" + urltext + "</b>";
     }
 
     outputtext = bias_detector(inputtext,male_terms_job);
@@ -29,13 +29,16 @@ function listToString(list){
 
 function bias_detector(in_text, terms){
     in_arr = in_text.split(" ");
+    in_arr_wop = in_text.replace(/[^\w\s\']|_/g, "");
+    in_arr_wop = in_arr_wop.toLowerCase();
+    in_arr_wop = in_arr_wop.split(" ");
 
     let output = '';
     let final = [];
 
     let count = 0;
     let term_indicies = [];
-    in_arr.forEach(element => {
+    in_arr_wop.forEach(element => {
         if(terms.includes(element)){
             term_indicies.push(count);
         }
@@ -61,12 +64,15 @@ function bias_detector(in_text, terms){
 
 function count_terms(in_text,terms){
     
-    in_arr = in_text.split(" ");
+    in_arr_wop = in_text.replace(/[^\w\s\']|_/g, "");
+    in_arr_wop = in_arr_wop.toLowerCase();
+    in_arr_wop = in_arr_wop.split(" ");
+
     term_counts = [];
     terms.forEach(element => {
         temp_count = 0;
-        for (let i = 0; i < in_arr.length; i++) {
-            if (in_arr[i] == element){
+        for (let i = 0; i < in_arr_wop.length; i++) {
+            if (in_arr_wop[i] == element){
                 temp_count += 1;
             };
         };
@@ -83,17 +89,18 @@ function count_terms(in_text,terms){
 
 function getURLText(inputurl){
     // read text from URL location
-    var request = new XMLHttpRequest();
-    request.open('GET', inputurl, true);
-    request.send(null);
-    request.onreadystatechange = function () {
-        if (request.readyState === 4 && request.status === 200) {
-            var type = request.getResponseHeader('Content-Type');
-            if (type.indexOf("text") !== 1) {
-                return request.responseText;
-            }
-        }
-    }
+    // this feature would require CORS handler chrome extension
+    // returns website meta data and title information
+    /*
+    fetch(inputurl)
+        .then(response => {
+            console.log(response);
+            const html = response.data;
+            console.log(html);
+        })
+        .catch(console.error);
+    */
+   return "URL parsing is not currently enabled. Please copy the raw website text into the text box above.";
 }
 
 function whyBiased(word){

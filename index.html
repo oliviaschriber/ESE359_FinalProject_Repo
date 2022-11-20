@@ -4,26 +4,35 @@
     <meta charset="UTF-8">
     <title>Bias Tool Website</title>
     <link rel="stylesheet" href="design.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
     <script src="webscrape.js"></script>
 </head>
 
 <body>
     <h1> Welcome to the Ultimate Gender Bias Detection Tool! </h1>
-    <!--<br>-->
-    <h2> Instructions: Copy and paste text or insert a website url and then press the button! </h2>
+    <h2>Instructions: Copy and paste text or insert a website url and then press the button!</h2>
     <h3> Our bias detection tool will: </h3>
-    <p> - search for masculine and feminine encoded words </p>
-    <p> - display each list </p>
-    <p> - highlight their locations in the text </p>
-    <!--<br>-->
+    <ul>
+        <li>search for masculine and feminine encoded words</li>
+        <li>display each list</li>
+        <li>highlight their locations in the text</li>
+    </ul>
     <h3> We hope you find this tool useful! </h3>
-
-    <p>Enter text or url here: <input type="text" id="input_field"> <em id="note">*if url: it should start with http: or https:</em> </p>
-    <button type="button" onclick="submittext()">submit to bias detector</button>
+    <hr>
+    <p>Enter personal writing, website raw text, or url here: </p>
+    <!--<input type="text" id="input_field"> -->
+    <em id="note">*if url: it should start with http: or https:</em>
+    <form>
+        <textarea id="input_field"></textarea>
+    </form>
+    <div id="buttondiv">
+        <button type="button" onclick="submittext()">submit to bias detector</button>
+    </div>
     <br>
     <h3>TEXT</h3>
     <p id="final_output"></p>
     <br>
-    <h3>TERM COUNTS</h3>
+    <h3>BIASED TERM COUNTS</h3>
     <p id="count_output"></p>
 </body>

@@ -1,6 +1,56 @@
+/* functionaility */
 #biased {
     color: red;
 }
 #note {
     font-size: small;
+}
+#input_field {
+    width: 99%;
+    height: 150px;
+    overflow-wrap: break-word;
+    resize: none;
+    background-color: #faedcd;
+    border-radius: 10px;
+    border: 2px solid #bc6c25;
+}
+#nourl {
+    color: red;
+}
+
+/* styling */
+body{
+    background: #fefae0;
+    color: #283618;
+    font-family: "Ubuntu", sans-serif;
+    margin: 5%;
+}
+h1 {
+    text-align: center;
+    font-family: "Sofia", sans-serif;
+    font-size: 300%;
+}
+button {
+    background-color: #ccd5ae;
+    border: 2px solid #606c38;
+    border-radius: 10px;
+    height: 50px;
+    width: fit-content;
+    display: flex;
+    text-align: center;
+    font-size: x-large;
+    font-family: "Sofia", sans-serif;
+    cursor: pointer;
+    margin: auto;
+}
+#buttondiv {
+    justify-self: center;
+}
+li {
+    color: #606c38;
+}
+hr {
+    height: 1px;
+    background-color: #bc6c25;
+    border: none;
 }
