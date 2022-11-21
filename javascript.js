@@ -13,10 +13,22 @@ function submittext(){
         inputtext = "<b id=nourl>" + urltext + "</b>";
     }
 
-    outputtext = bias_detector(inputtext,male_terms_job);
+    outputtext = bias_detector(inputtext,male_terms_job,"biased_m");
+
+    outputtext = bias_detector(outputtext,female_terms_job,"biased_f");
     document.getElementById('final_output').innerHTML = outputtext;
-    counts = listToString(count_terms(inputtext,male_terms_job));
-    document.getElementById('count_output').innerHTML = counts;
+
+    counts_m = listToString(count_terms(inputtext,male_terms_job, "biased_m"));
+    document.getElementById('count_output_m').innerHTML = counts_m;
+    counts_f = listToString(count_terms(inputtext,female_terms_job, "biased_f"));
+    document.getElementById('count_output_f').innerHTML = counts_f;
+
+    document.getElementById('male_explanation').innerHTML = male_ex;
+    document.getElementById('female_explanation').innerHTML = female_ex;
+    document.getElementById('male_out_title').innerHTML = "Male Biased Terms";
+    document.getElementById('female_out_title').innerHTML = "Female Biased Terms";
+    document.getElementById('male_out_title2').innerHTML = "Male Biased Terms";
+    document.getElementById('female_out_title2').innerHTML = "Female Biased Terms";
 }
 
 function listToString(list){
@@ -27,7 +39,7 @@ function listToString(list){
     return text;
 }
 
-function bias_detector(in_text, terms){
+function bias_detector(in_text, terms, id_string){
     in_arr = in_text.split(" ");
     in_arr_wop = in_text.replace(/[^\w\s\']|_/g, "");
     in_arr_wop = in_arr_wop.toLowerCase();
@@ -48,8 +60,9 @@ function bias_detector(in_text, terms){
     let count2 = 0;
     in_arr.forEach(element2 => {
         if(term_indicies.includes(count2)){
-            theWhy = whyBiased(element2);
-            temp_string = "<b title=\"" + theWhy + "\" id=biased>";
+            temp_element2 = element2.toLowerCase();
+            theWhy = whyBiased(temp_element2.replace(/[^\w\s\']|_/g, ""));
+            temp_string = "<b title=\"" + theWhy + "\" id=" +  id_string + ">";
             output = temp_string + element2 + "</b>";
             final.push(output);
         } else{
@@ -62,7 +75,7 @@ function bias_detector(in_text, terms){
     return final_string;
 }
 
-function count_terms(in_text,terms){
+function count_terms(in_text,terms, id_string){
     
     in_arr_wop = in_text.replace(/[^\w\s\']|_/g, "");
     in_arr_wop = in_arr_wop.toLowerCase();
@@ -77,7 +90,7 @@ function count_terms(in_text,terms){
             };
         };
         if(temp_count != 0) {
-            counts = "<b id=biased>" + element + ": " + temp_count + "</b>" + ", ";
+            counts = "<b id=" + id_string + ">" + element + ": " + temp_count + "</b>" + ", ";
         } else {
             counts = element + ": " + temp_count + ", ";
         }
@@ -108,99 +121,104 @@ function whyBiased(word){
     return why_string;
 }
 
-var whys_dict = {
-    "active": "this is biased because active...",
-    "adventurous": "this is biased because adventurous...",
-    "aggressive": "this is biased because aggressive...",
-    "ambitious": "this is biased because ambitious...",
-    "analytic": "this is biased because analytic...",
-    "assertive": "this is biased because assertive...",
-    "athletic": "this is biased because athletic...",
-    "autonomous": "this is biased because autonomous...",
-    "battle": "this is biased because battle...",
-    "boastful": "this is biased because boastful...",
-    "challenge": "this is biased because challenge...",
-    "champion": "this is biased because champion...",
-    "competitive": "this is biased because competitive...",
-    "confident": "this is biased because confident...",
-    "courageous": "this is biased because courageous...",
-    "decide": "this is biased because decide...",
-    "decision": "this is biased because decision...",
-    "decisive": "this is biased because decisive...",
-    "defend": "this is biased because defend...",
-    "determined": "this is biased because determinded...",
-    "dominating": "this is biased because dominating...",
-    "dominant": "this is biased because dominant...",
-    "driven": "this is biased because driven...",
-    "fearless": "this is biased because fearless...",
-    "fight": "this is biased because fight...",
-    "forceful": "this is biased because forceful...",
-    "greedy": "this is biased because greedy...",
-    "head-strong": "this is biased because head-strong...",
-    "headstrong": "this is biased because headstrong...",
-    "hierarchical": "this is biased because hierarchical...",
-    "hostile": "this is biased because hostile...",
-    "impulsive": "this is biased because impulsive...",
-    "independent": "this is biased because independent...",
-    "individual": "this is biased because individual...",
-    "intellectual": "this is biased because intellectual...",
-    "lead": "this is biased because lead...",
-    "logical": "this is biased because logical...",
-    "objective": "this is biased because objective...",
-    "opinionated": "this is biased because opinionated...",
-    "outspoken": "this is biased because outspoken...",
-    "persistent": "this is biased because persistent...",
-    "principle": "this is biased because principle...",
-    "reckless": "this is biased because reckless...",
-    "self-confident": "this is biased because self-confident...",
-    "self-reliant": "this is biased because self-reliant...",
-    "self-sufficient": "this is biased because self-sufficient...",
-    "stubborn": "this is biased because stubborn...",
-    "superior": "this is biased because superior...",
-    "unreasonable": "this is biased because unreasonable...",
+var male_ex = "The words above are masculine-coded as they lean towards the masculine stereotypes of aggression and stubbornness, especially in the workforce. The terms have been used historically to subtly hint at / attract male candidates to jobs using these words in their descriptions. \"Thus, eliminating the use of incidental masculine wording in job advertisements may not only increase the numbers of women in these occupations but change the female stereotype to include more agentic traits, leading to greater numbers of women seeking training in these occupations.\"";
+var female_ex = "The words above are feminine-coded as they lean towards the female stereotypes of being passive and more confused on human connection and empathy in the workforce. The terms have been used historically to subtly hint at /attract female candidates to jobs using these words in their descriptions, and deter female candidates from jobs that contain male-coded terms. \"Regardless of the type of job, participants, particularly women, ranked jobs most highly when they included words that matched their gender.\"";
+var male_l = "<a href=\"https://gender-decoder.katmatfield.com/static/documents/Gaucher-Friesen-Kay-JPSP-Gendered-Wording-in-Job-ads.pdf\" target=\"_blank\">Male Biased Terms</a>";
+var female_l = "<a href=\"https://gender-decoder.katmatfield.com/static/documents/Gaucher-Friesen-Kay-JPSP-Gendered-Wording-in-Job-ads.pdf\" target=\"_blank\">Female Biased Terms</a>";
 
-    "agreeable": "this is biased because agreeable...",
-    "affectionate": "this is biased because affectionate...",
-    "child": "this is biased because child...",
-    "cheering": "this is biased because cheering...",
-    "collaborative": "this is biased because collaborative...",
-    "communal": "this is biased because communal...",
-    "compassionate": "this is biased because compassionate...",
-    "connecting": "this is biased because connecting...",
-    "considerate": "this is biased because considerate...",
-    "cooperative": "this is biased because cooperative...",
-    "co-operative": "this is biased because co-operative...",
-    "dependable": "this is biased because dependable...",
-    "emotional": "this is biased because emotional...",
-    "empathetic": "this is biased because empathetic...",
-    "feeling": "this is biased because feeling...",
-    "flatterable": "this is biased because flatterable...",
-    "gentle": "this is biased because gentle...",
-    "honest": "this is biased because honest...",
-    "interdependent": "this is biased because interdependent...",
-    "interpersonal": "this is biased because interpersonal...",
-    "kind": "this is biased because kind...",
-    "kinship": "this is biased because kinship...",
-    "loyal": "this is biased because loyal...",
-    "modest": "this is biased because modest...",
-    "nagging": "this is biased because nagging...",
-    "nurturing": "this is biased because nurturing...",
-    "pleasant": "this is biased because pleasant...",
-    "polite": "this is biased because polite...",
-    "quiet": "this is biased because quiet...",
-    "responsive": "this is biased because responsive...",
-    "sensitive": "this is biased because sensitive...",
-    "submissive": "this is biased because submissive...",
-    "supportive": "this is biased because supportive...",
-    "sympathetic": "this is biased because sympathetic...",
-    "tender": "this is biased because tender...",
-    "trusting": "this is biased because trusting...",
-    "understanding": "this is biased because understanding...",
-    "warm": "this is biased because warm...",
-    "whiney": "this is biased because whiney...",
-    "enthusiastic": "this is biased because enthusiastic...",
-    "inclusive": "this is biased because inclusive...",
-    "yielding": "this is biased because yielding...",
-    "share": "this is biased because share...",
-    "sharing": "this is biased because sharing..."
+var whys_dict = {
+    "active": "This is potentially a male biased term.",
+    "adventurous": "This is potentially a male biased term.",
+    "aggressive": "This is potentially a male biased term.",
+    "ambitious": "This is potentially a male biased term.",
+    "analytic": "This is potentially a male biased term.",
+    "assertive": "This is potentially a male biased term.",
+    "athletic": "This is potentially a male biased term.",
+    "autonomous": "This is potentially a male biased term.",
+    "battle": "This is potentially a male biased term.",
+    "boastful": "This is potentially a male biased term.",
+    "challenge": "This is potentially a male biased term.",
+    "champion": "This is potentially a male biased term.",
+    "competitive": "This is potentially a male biased term.",
+    "confident": "This is potentially a male biased term.",
+    "courageous": "This is potentially a male biased term.",
+    "decide": "This is potentially a male biased term.",
+    "decision": "This is potentially a male biased term.",
+    "decisive": "This is potentially a male biased term.",
+    "defend": "This is potentially a male biased term.",
+    "determined": "This is potentially a male biased term.",
+    "dominating": "This is potentially a male biased term.",
+    "dominant": "This is potentially a male biased term.",
+    "driven": "This is potentially a male biased term.",
+    "fearless": "This is potentially a male biased term.",
+    "fight": "This is potentially a male biased term.",
+    "forceful": "This is potentially a male biased term.",
+    "greedy": "This is potentially a male biased term.",
+    "head-strong": "This is potentially a male biased term.",
+    "headstrong": "This is potentially a male biased term.",
+    "hierarchical": "This is potentially a male biased term.",
+    "hostile": "This is potentially a male biased term.",
+    "impulsive": "This is potentially a male biased term.",
+    "independent": "This is potentially a male biased term.",
+    "individual": "This is potentially a male biased term.",
+    "intellectual": "This is potentially a male biased term.",
+    "lead": "This is potentially a male biased term.",
+    "logical": "This is potentially a male biased term.",
+    "objective": "This is potentially a male biased term.",
+    "opinionated": "This is potentially a male biased term.",
+    "outspoken": "This is potentially a male biased term.",
+    "persistent": "This is potentially a male biased term.",
+    "principle": "This is potentially a male biased term.",
+    "reckless": "This is potentially a male biased term.",
+    "self-confident": "This is potentially a male biased term.",
+    "self-reliant": "This is potentially a male biased term.",
+    "self-sufficient": "This is potentially a male biased term.",
+    "stubborn": "This is potentially a male biased term.",
+    "superior": "This is potentially a male biased term.",
+    "unreasonable": "This is potentially a male biased term.",
+
+    "agreeable": "This is potentially a female biased term.",
+    "affectionate": "This is potentially a female biased term.",
+    "child": "This is potentially a female biased term.",
+    "cheering": "This is potentially a female biased term.",
+    "collaborative": "This is potentially a female biased term.",
+    "communal": "This is potentially a female biased term.",
+    "compassionate": "This is potentially a female biased term.",
+    "connecting": "This is potentially a female biased term.",
+    "considerate": "This is potentially a female biased term.",
+    "cooperative": "This is potentially a female biased term.",
+    "co-operative": "This is potentially a female biased term.",
+    "dependable": "This is potentially a female biased term.",
+    "emotional": "This is potentially a female biased term.",
+    "empathetic": "This is potentially a female biased term.",
+    "feeling": "This is potentially a female biased term.",
+    "flatterable": "This is potentially a female biased term.",
+    "gentle": "This is potentially a female biased term.",
+    "honest": "This is potentially a female biased term.",
+    "interdependent": "This is potentially a female biased term.",
+    "interpersonal": "This is potentially a female biased term.",
+    "kind": "This is potentially a female biased term.",
+    "kinship": "This is potentially a female biased term.",
+    "loyal": "This is potentially a female biased term.",
+    "modest": "This is potentially a female biased term.",
+    "nagging": "This is potentially a female biased term.",
+    "nurturing": "This is potentially a female biased term.",
+    "pleasant": "This is potentially a female biased term.",
+    "polite": "This is potentially a female biased term.",
+    "quiet": "This is potentially a female biased term.",
+    "responsive": "This is potentially a female biased term.",
+    "sensitive": "This is potentially a female biased term.",
+    "submissive": "This is potentially a female biased term.",
+    "supportive": "This is potentially a female biased term.",
+    "sympathetic": "This is potentially a female biased term.",
+    "tender": "This is potentially a female biased term.",
+    "trusting": "This is potentially a female biased term.",
+    "understanding": "This is potentially a female biased term.",
+    "warm": "This is potentially a female biased term.",
+    "whiney": "This is potentially a female biased term.",
+    "enthusiastic": "This is potentially a female biased term.",
+    "inclusive": "This is potentially a female biased term.",
+    "yielding": "This is potentially a female biased term.",
+    "share": "This is potentially a female biased term.",
+    "sharing": "This is potentially a female biased term."
 };

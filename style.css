@@ -1,6 +1,9 @@
 /* functionaility */
-#biased {
-    color: red;
+#biased_m {
+    color: rgb(246, 83, 8);
+}
+#biased_f {
+    color: blue;
 }
 #note {
     font-size: small;
