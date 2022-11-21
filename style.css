@@ -6,7 +6,8 @@
     color: blue;
 }
 #biased_s {
-    color: green;
+    /*color: rgb(35, 199, 62);*/
+    color: rgb(211, 70, 211);
 }
 #note, #suggest_format {
     font-size: small;

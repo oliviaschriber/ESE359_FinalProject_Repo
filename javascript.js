@@ -49,6 +49,7 @@ function submitsuggestions() {
     suggest_list = suggest_input.split(" ");
     suggestions = suggest_list;
     console.log(suggestions);
+    document.getElementById('confirmation').innerHTML = "Thank you! Submit or resubmit input to bias detector to detect these suggestions.";
 }
 
 function listToString(list){
