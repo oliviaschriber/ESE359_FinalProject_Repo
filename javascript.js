@@ -1,6 +1,7 @@
 
 male_terms_job = ["active", "adventurous", "aggressive", "ambitious", "analytic", "assertive", "athletic", "autonomous", "battle", "boastful", "challenge", "champion", "competitive", "confident", "courageous", "decide", "decision", "decisive", "defend", "determined", "dominating", "dominant", "driven", "fearless", "fight", "forceful", "greedy", "head-strong", "headstrong", "hierarchical", "hostile", "impulsive", "independent", "individual", "intellectual", "lead", "logical", "objective", "opinionated", "outspoken", "persistent", "principle", "reckless", "self-confident", "self-reliant", "self-sufficient", "stubborn", "superior", "unreasonable"];
 female_terms_job = ["agreeable", "affectionate", "child", "cheering", "collaborative", "communal", "compassionate", "connecting", "considerate", "cooperative", "co-operative", "dependable", "emotional", "empathetic", "feeling", "flatterable", "gentle", "honest", "interdependent", "interpersonal", "kind", "kinship", "loyal", "modest", "nagging", "nurturing", "pleasant", "polite", "quiet", "responsive", "sensitive", "submissive", "supportive", "sympathetic", "tender", "trusting", "understanding", "warm", "whiney", "enthusiastic", "inclusive", "yielding", "share", "sharing"];
+suggestions = [];
 
 function submittext(){
     inputtext = '';
@@ -16,6 +17,14 @@ function submittext(){
     outputtext = bias_detector(inputtext,male_terms_job,"biased_m");
 
     outputtext = bias_detector(outputtext,female_terms_job,"biased_f");
+
+    if(suggestions.length != 0){
+        outputtext = bias_detector(outputtext,suggestions,"biased_s");
+        counts_s = listToString(count_terms(inputtext,suggestions, "biased_s"));
+        document.getElementById('count_output_s').innerHTML = counts_s;
+        document.getElementById('s_out_title').innerHTML = "Suggested Biased Terms";
+    }
+
     document.getElementById('final_output').innerHTML = outputtext;
 
     counts_m = listToString(count_terms(inputtext,male_terms_job, "biased_m"));
@@ -29,6 +38,17 @@ function submittext(){
     document.getElementById('female_out_title').innerHTML = "Female Biased Terms";
     document.getElementById('male_out_title2').innerHTML = "Male Biased Terms";
     document.getElementById('female_out_title2').innerHTML = "Female Biased Terms";
+}
+
+function submitsuggestions() {
+    suggest_input = '';
+    suggest_list = [];
+
+    suggest_input = document.getElementById("suggestions").value;
+    suggest_input = suggest_input.toLowerCase();
+    suggest_list = suggest_input.split(" ");
+    suggestions = suggest_list;
+    console.log(suggestions);
 }
 
 function listToString(list){

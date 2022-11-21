@@ -12,6 +12,7 @@
 <body>
     <h1> Welcome to the Ultimate Gender Bias Detection Tool! </h1>
     <h2>Instructions: Copy and paste text or insert a website url and then press the button!</h2>
+    <h3>If you have suggestions for additional biased terms to check for, submit them at the bottom!</h3>
     <h3> Our bias detection tool will: </h3>
     <ul>
         <li>search for masculine and feminine encoded words</li>
@@ -26,7 +27,7 @@
     <form>
         <textarea id="input_field"></textarea>
     </form>
-    <div id="buttondiv">
+    <div class="buttondiv">
         <button type="button" onclick="submittext()">submit to bias detector</button>
     </div>
     <br>
@@ -40,6 +41,9 @@
     <p id="female_out_title"></p>
     <p id="count_output_f"></p>
     <br>
+    <p id="s_out_title"></p>
+    <p id="count_output_s"></p>
+    <br>
     <h3>EXPLANATION</h3>
     <p id="male_out_title2"></p>
     <p id="male_link"></p>
@@ -48,4 +52,14 @@
     <p id="female_out_title2"></p>
     <p id="female_link"></p>
     <p id="female_explanation"></p>
+
+    <hr>
+    <h3>Biased Word Suggestions</h3>
+    <em id="suggest_format">*please suggest words separated by a single space only</em>
+    <form>
+        <textarea id="suggestions"></textarea>
+    </form>
+    <div class="buttondiv">
+        <button type="button" onclick="submitsuggestions()">submit suggestions</button>
+    </div>
 </body>

@@ -5,12 +5,24 @@
 #biased_f {
     color: blue;
 }
-#note {
+#biased_s {
+    color: green;
+}
+#note, #suggest_format {
     font-size: small;
 }
 #input_field {
     width: 99%;
     height: 150px;
+    overflow-wrap: break-word;
+    resize: none;
+    background-color: #faedcd;
+    border-radius: 10px;
+    border: 2px solid #bc6c25;
+}
+#suggestions {
+    width: 99%;
+    height: 50px;
     overflow-wrap: break-word;
     resize: none;
     background-color: #faedcd;
@@ -46,7 +58,7 @@ button {
     cursor: pointer;
     margin: auto;
 }
-#buttondiv {
+.buttondiv {
     justify-self: center;
 }
 li {
