@@ -63,6 +63,7 @@ function listToString(list){
 function bias_detector(in_text, terms, id_string){
     in_arr = in_text.split(" ");
     in_arr_wop = in_text.replace(/[^\w\s\']|_/g, "");
+    in_arr_wop = in_arr_wop.replace(/(\r\n|\n|\r)/gm, " ");
     in_arr_wop = in_arr_wop.toLowerCase();
     in_arr_wop = in_arr_wop.split(" ");
 
@@ -82,6 +83,7 @@ function bias_detector(in_text, terms, id_string){
     in_arr.forEach(element2 => {
         if(term_indicies.includes(count2)){
             temp_element2 = element2.toLowerCase();
+            temp_element2 = temp_element2.replace(/(\r\n|\n|\r)/gm, "");
             theWhy = whyBiased(temp_element2.replace(/[^\w\s\']|_/g, ""));
             temp_string = "<b title=\"" + theWhy + "\" id=" +  id_string + ">";
             output = temp_string + element2 + "</b>";
@@ -99,6 +101,7 @@ function bias_detector(in_text, terms, id_string){
 function count_terms(in_text,terms, id_string){
     
     in_arr_wop = in_text.replace(/[^\w\s\']|_/g, "");
+    in_arr_wop = in_arr_wop.replace(/(\r\n|\n|\r)/gm, "");
     in_arr_wop = in_arr_wop.toLowerCase();
     in_arr_wop = in_arr_wop.split(" ");
 
